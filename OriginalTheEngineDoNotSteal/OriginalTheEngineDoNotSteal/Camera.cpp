@@ -5,14 +5,18 @@ Camera::Camera()
 	//Nothing to do here
 }
 
-Camera::Camera(float fovy, float aspect, float zNear, float zFar) : fFovy(fovy), fAspect(aspect), fzNear(zNear), fzFar(zFar)
+Camera::Camera(float fovy, float aspect, float zNear, float zFar, GLFWwindow* windowPtr) : fFovy(fovy), fAspect(aspect), fzNear(zNear), fzFar(zFar)
 {
 	time = 0;
 	delt = 0;
-	prev = 0;
+	prevTime = 0;
 	perpMat = glm::perspective(fFovy, fAspect, fzNear, fzFar);
 	vCamLoc = { 0,0,2 };
 	vCamRot = { 0,0,0,1 };
+	sens = .0005;
+	window = windowPtr;
+	glfwGetWindowSize(window, &w, &h);
+	glfwSetCursorPos(window, w / 2, h / 2);
 
 	rotMat = (glm::mat3)glm::yawPitchRoll(vCamRot.y, vCamRot.x, vCamRot.z);
 
@@ -25,29 +29,29 @@ Camera::Camera(float fovy, float aspect, float zNear, float zFar) : fFovy(fovy),
 	camMat = perpMat * lookMat;
 }
 
-void Camera::setAspects(int width, int height)
-{
-	w = width;
-	h = height;
-}
-
-void Camera::Update(std::map<int, bool> input)
+void Camera::Update(std::map<int, bool> input, std::map<int, bool> prev)
 {
 	inputHandling = input;
-	prev = time;
+	prevTime = time;
 	time = (float)glfwGetTime();
-	delt = time - prev;
+	delt = time - prevTime;
 
+
+	glfwGetCursorPos(window, &x, &y);
 	vCamRot.y -= sens * (x - w * .5f);
 	vCamRot.x -= sens * (y - h * .5f);
+	vCamRot.x = glm::clamp(vCamRot.x, -.5f * glm::pi<float>(), .5f * glm::pi<float>());
+	vCamRot.y = glm::clamp(vCamRot.y, -.25f * glm::pi<float>(), .25f * glm::pi<float>());
 
 	rotMat = (glm::mat3)glm::yawPitchRoll(vCamRot.y, vCamRot.x, vCamRot.z);
-	
-	if (inputHandling[GLFW_KEY_LEFT]) { vCamVel += rotMat * glm::vec3(-1, 0, 0); std::cout << "left"; }
-	if (inputHandling[GLFW_KEY_RIGHT]) { vCamVel += rotMat * glm::vec3(1, 0, 0); std::cout << "right";}
-	if (inputHandling[GLFW_KEY_UP]) { vCamVel += rotMat * glm::vec3(0, 0, -1); std::cout << "up";	}
-	if (inputHandling[GLFW_KEY_DOWN]) { vCamVel += rotMat * glm::vec3(0, 0, 1); std::cout << "down"; }
-	else { vCamVel = glm::vec3(0, 0, 0); }
+	if (inputHandling != prev) { delt = 0; }
+	if (inputHandling[GLFW_KEY_LEFT]) { vCamVel += rotMat * glm::vec3(-1, 0, 0); }
+	if (inputHandling[GLFW_KEY_RIGHT]) { vCamVel += rotMat * glm::vec3(1, 0, 0); }
+	if (inputHandling[GLFW_KEY_UP]) { vCamVel += rotMat * glm::vec3(0, 0, -1); }
+	if (inputHandling[GLFW_KEY_DOWN]) { vCamVel += rotMat * glm::vec3(0, 0, 1); }
+	if (inputHandling[GLFW_KEY_SPACE]) { vCamVel += rotMat * glm::vec3(0, 1, 0); }
+	if (inputHandling[GLFW_KEY_LEFT_SHIFT]) { vCamVel += rotMat * glm::vec3(0, -1, 0); }
+
 	float speed = 1.0f;
 	if (vCamVel != glm::vec3())
 	{

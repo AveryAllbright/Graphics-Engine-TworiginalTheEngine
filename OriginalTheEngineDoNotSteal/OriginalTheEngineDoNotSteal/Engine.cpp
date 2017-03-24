@@ -115,13 +115,12 @@ bool Engine::GameLoop()
 
 	glfwSetKeyCallback(GLFWwindowPtr, keyCallback);
 	glfwSetMouseButtonCallback(GLFWwindowPtr, mouseClick);
-	
+
 	float fovy = 3.14159f * .4f / zoom;
 	float aspect = (float)width / (float)height;
 	float zNear = .01f;
 	float zFar = 1000.0f;
-	Camera camera(fovy, aspect, zNear, zFar);
-	camera.setAspects(width, height);
+	Camera camera(fovy, aspect, zNear, zFar, GLFWwindowPtr);
 
 	while (!glfwWindowShouldClose(GLFWwindowPtr))
 	{
@@ -129,21 +128,24 @@ bool Engine::GameLoop()
 		double randVal = rand() % 1;
 		float fRand = randVal / 10;
 
+
 		//Green/Magenta Pulse
 		GLfloat time = glfwGetTime();
 		GLfloat redValue = (sin(time) / 2) + fRand;
 		GLfloat greenValue = (cos(time) / 2) + fRand;
-		GLfloat blueValue = (sin(time) / 2) + fRand;
-		GLfloat alphaValue = (cos(time) / 2) + .5f;
-		glUniform4f(3, redValue, greenValue, blueValue, alphaValue);
+		GLfloat alphaValue = (cos(time) / 2) + .75f;
+		glUniform1f(3, redValue);
+		glUniform1f(4, greenValue);
+		glUniform1f(5, alphaValue);
+		
 
 		//Key input updates
 		keyWasDown = keyIsDown;
+		keyIsDown.clear();
 		glfwPollEvents();
 
 		//Camera Update
-		glfwGetCursorPos(GLFWwindowPtr, &camera.x, &camera.y);
-		camera.Update(keyIsDown);
+		camera.Update(keyIsDown, keyWasDown);
 		glBindVertexArray(vertArr);
 		glDrawArrays(GL_TRIANGLES, 0, vertCount); // draw triangles, from 0th index to index of (size of array holding triangles)
 		glBindVertexArray(0); // unbind an object after drawing it
