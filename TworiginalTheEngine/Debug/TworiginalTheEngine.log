@@ -1,0 +1,16 @@
+﻿  Zone1.cpp
+c:\users\vaaneverick\desktop\tworiginaltheengine\tworiginaltheengine\zone1.cpp(19): warning C4244: 'argument': conversion from 'double' to 'unsigned int', possible loss of data
+c:\users\vaaneverick\desktop\tworiginaltheengine\tworiginaltheengine\zone1.cpp(58): warning C4018: '<': signed/unsigned mismatch
+c:\users\vaaneverick\desktop\tworiginaltheengine\tworiginaltheengine\zone1.cpp(142): warning C4018: '<': signed/unsigned mismatch
+c:\users\vaaneverick\desktop\tworiginaltheengine\tworiginaltheengine\zone1.cpp(145): warning C4018: '<': signed/unsigned mismatch
+c:\users\vaaneverick\desktop\tworiginaltheengine\tworiginaltheengine\zone1.cpp(159): warning C4018: '<': signed/unsigned mismatch
+c:\users\vaaneverick\desktop\tworiginaltheengine\tworiginaltheengine\zone1.cpp(162): warning C4018: '<': signed/unsigned mismatch
+c:\users\vaaneverick\desktop\tworiginaltheengine\tworiginaltheengine\zone1.cpp(182): warning C4018: '<': signed/unsigned mismatch
+c:\users\vaaneverick\desktop\tworiginaltheengine\tworiginaltheengine\zone1.cpp(214): warning C4018: '<': signed/unsigned mismatch
+c:\users\vaaneverick\desktop\tworiginaltheengine\tworiginaltheengine\zone1.cpp(267): warning C4018: '<': signed/unsigned mismatch
+c:\users\vaaneverick\desktop\tworiginaltheengine\tworiginaltheengine\zone1.cpp(286): warning C4018: '<': signed/unsigned mismatch
+c:\users\vaaneverick\desktop\tworiginaltheengine\tworiginaltheengine\zone1.cpp(311): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\vaaneverick\desktop\tworiginaltheengine\tworiginaltheengine\zone1.cpp(312): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\vaaneverick\desktop\tworiginaltheengine\tworiginaltheengine\zone1.cpp(313): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+c:\users\vaaneverick\desktop\tworiginaltheengine\tworiginaltheengine\zone1.cpp(325): warning C4018: '<': signed/unsigned mismatch
+  TworiginalTheEngine.vcxproj -> C:\Users\VaanEverick\Desktop\TworiginalTheEngine\Debug\TworiginalTheEngine.exe

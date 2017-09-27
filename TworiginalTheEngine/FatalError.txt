@@ -1,0 +1,1 @@
+0(17) : error C0000: syntax error, unexpected '=', expecting "::" at token "="
